@@ -8,12 +8,12 @@ export default function ProductCard({
   onAddToQuotation, 
   onUpdateQuantity 
 }) {
-  const isAdded = Boolean(quotationItem);
+  const isAdded = Boolean(quotationItem && quotationItem.quantity > 0);
   const quantity = quotationItem ? quotationItem.quantity : 0;
 
   return (
     <div 
-      className="bg-white rounded-2xl border border-[#eae7de] hover:border-[#c59b27]/60 shadow-xs hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group active:scale-[0.99] sm:active:scale-100"
+      className="bg-white rounded-2xl border border-[#eae7de] hover:border-[#c59b27]/60 shadow-xs hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group"
       id={`product-card-${product.id}`}
     >
       {/* Product Image with Category Pill */}
@@ -54,27 +54,33 @@ export default function ProductCard({
         </div>
 
         {/* Quantity Controls / Add to Quotation */}
-        <div className="pt-0.5">
+        <div className="pt-0.5 relative z-10">
           {isAdded ? (
             <div className="flex items-center justify-between bg-[#fbf5e6] border border-[#eeddb0] rounded-xl p-1 shadow-xs">
               <button
                 type="button"
-                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#eeddb0] text-[#1a1c22] hover:bg-[#f7eed5] active:bg-[#f0e4c5] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
-                onClick={() => onUpdateQuantity(product.id, quantity - 1)}
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#eeddb0] text-[#1a1c22] hover:bg-[#f7eed5] active:bg-[#f0e4c5] flex items-center justify-center transition-all cursor-pointer shadow-2xs select-none"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onUpdateQuantity(product.id, quantity - 1);
+                }}
                 title="Decrease quantity"
                 aria-label="Decrease quantity"
               >
                 <Minus size={15} />
               </button>
 
-              <span className="font-mono font-extrabold text-sm sm:text-base text-[#1a1c22] px-2" title="Current quantity">
+              <span className="font-mono font-extrabold text-sm sm:text-base text-[#1a1c22] px-2 select-none" title="Current quantity">
                 {quantity}
               </span>
 
               <button
                 type="button"
-                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#eeddb0] text-[#1a1c22] hover:bg-[#f7eed5] active:bg-[#f0e4c5] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
-                onClick={() => onUpdateQuantity(product.id, quantity + 1)}
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#eeddb0] text-[#1a1c22] hover:bg-[#f7eed5] active:bg-[#f0e4c5] flex items-center justify-center transition-all cursor-pointer shadow-2xs select-none"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onUpdateQuantity(product.id, quantity + 1);
+                }}
                 title="Increase quantity"
                 aria-label="Increase quantity"
               >
@@ -85,10 +91,13 @@ export default function ProductCard({
             <button
               id={`add-to-quote-${product.id}`}
               type="button"
-              className="w-full py-2.5 px-3 sm:px-4 rounded-xl bg-gold-btn text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_14px_rgba(197,155,39,0.25)] transition-all cursor-pointer hover:shadow-[0_6px_18px_rgba(197,155,39,0.35)] active:scale-98 min-h-[40px]"
-              onClick={() => onAddToQuotation(product)}
+              className="w-full py-2.5 px-3 sm:px-4 rounded-xl bg-gold-btn text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_14px_rgba(197,155,39,0.25)] hover:shadow-[0_6px_18px_rgba(197,155,39,0.35)] transition-all cursor-pointer active:scale-98 min-h-[42px] select-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToQuotation(product);
+              }}
             >
-              <Plus size={15} />
+              <Plus size={16} />
               <span>Add to Quotation</span>
             </button>
           )}

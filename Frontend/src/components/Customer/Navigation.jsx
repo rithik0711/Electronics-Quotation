@@ -17,8 +17,8 @@ export default function Navigation({
   isOwnerLoggedIn = false,
   onViewOwnerDashboard
 }) {
-  const totalItemCount = quotationItems.reduce((acc, item) => acc + item.quantity, 0);
-  const quotationTotal = quotationItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalItemCount = quotationItems.reduce((acc, item) => acc + (Number(item?.quantity) || 0), 0);
+  const quotationTotal = quotationItems.reduce((acc, item) => acc + (Number(item?.price) || 0) * (Number(item?.quantity) || 0), 0);
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#eae7de] shadow-xs">
@@ -92,25 +92,24 @@ export default function Navigation({
           <button
             id="view-quotation-btn"
             type="button"
-            className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-white border-1.5 border-[#b38728] hover:bg-[#fbf5e6] text-[#1a1c22] transition-all shadow-[0_2px_8px_rgba(197,155,39,0.12)] cursor-pointer active:scale-95"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-white border-1.5 border-[#b38728] hover:bg-[#fbf5e6] text-[#1a1c22] transition-all shadow-[0_2px_8px_rgba(197,155,39,0.12)] cursor-pointer active:scale-95 flex-shrink-0"
             onClick={onOpenQuotation}
             title="View Quotation Estimate"
             aria-label={`View Quotation with ${totalItemCount} items`}
           >
             <FileSpreadsheet className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#b38728]" />
-            <span className="hidden sm:inline">Quotation</span>
+            <span>Quotation</span>
             
-            {totalItemCount > 0 ? (
-              <>
-                <span className="bg-[#b38728] text-white rounded-full text-[11px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 min-w-[18px] sm:min-w-[20px] text-center" id="quotation-badge-count">
-                  {totalItemCount}
-                </span>
-                <span className="font-mono text-xs font-extrabold text-[#946c1a] hidden min-[440px]:inline">
-                  {formatCurrency(quotationTotal)}
-                </span>
-              </>
-            ) : (
-              <span className="text-xs text-[#8c93a3] font-normal hidden min-[440px]:inline">0 items</span>
+            {totalItemCount > 0 && (
+              <span className="bg-[#b38728] text-white rounded-full text-[11px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 min-w-[18px] sm:min-w-[20px] text-center" id="quotation-badge-count">
+                {totalItemCount}
+              </span>
+            )}
+
+            {totalItemCount > 0 && (
+              <span className="font-mono text-xs font-extrabold text-[#946c1a] hidden md:inline">
+                {formatCurrency(quotationTotal)}
+              </span>
             )}
           </button>
         </div>

@@ -16,11 +16,15 @@ import { Sparkles, PackageSearch, RefreshCcw } from 'lucide-react';
 import './App.css';
 
 export default function App() {
-  // Quotation cart state with LocalStorage persistence
+  // Quotation cart state with LocalStorage persistence and safety sanitizer
   const [quotationItems, setQuotationItems] = useState(() => {
     try {
       const saved = localStorage.getItem('royal_quote_items');
-      return saved ? JSON.parse(saved) : [];
+      if (!saved) return [];
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) 
+        ? parsed.filter(item => item && item.id != null && Number(item.quantity) > 0)
+        : [];
     } catch {
       return [];
     }
@@ -118,12 +122,14 @@ export default function App() {
 
   // Add product to quotation
   const handleAddToQuotation = (product) => {
+    if (!product || product.id == null) return;
+
     setQuotationItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
+      const existing = prev.find(item => String(item.id) === String(product.id));
       if (existing) {
         return prev.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+          String(item.id) === String(product.id)
+            ? { ...item, quantity: (Number(item.quantity) || 1) + 1 }
             : item
         );
       }
@@ -134,21 +140,22 @@ export default function App() {
 
   // Update item quantity
   const handleUpdateQuantity = (productId, newQuantity) => {
-    if (newQuantity <= 0) {
+    const numQty = Number(newQuantity);
+    if (isNaN(numQty) || numQty <= 0) {
       handleRemoveItem(productId);
       return;
     }
     setQuotationItems(prev =>
       prev.map(item =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
+        String(item.id) === String(productId) ? { ...item, quantity: numQty } : item
       )
     );
   };
 
   // Remove single item
   const handleRemoveItem = (productId) => {
-    const item = quotationItems.find(i => i.id === productId);
-    setQuotationItems(prev => prev.filter(i => i.id !== productId));
+    const item = quotationItems.find(i => String(i.id) === String(productId));
+    setQuotationItems(prev => prev.filter(i => String(i.id) !== String(productId)));
     if (item) {
       showToast(`Removed "${item.name}" from quotation`);
     }
@@ -326,7 +333,7 @@ export default function App() {
             <section className="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6 mb-24 sm:mb-16" id="products-grid-container">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map(product => {
-                  const quotationItem = quotationItems.find(item => item.id === product.id);
+                  const quotationItem = quotationItems.find(item => String(item?.id) === String(product.id));
                   return (
                     <ProductCard
                       key={product.id}
@@ -415,7 +422,10 @@ export default function App() {
       />
 
       {/* Dynamic Floating Toast Notifications */}
-      <Toast toasts={toasts} />
+      <Toast 
+        toasts={toasts} 
+        onOpenQuotation={() => setIsQuotationModalOpen(true)} 
+      />
     </div>
   );
 }
