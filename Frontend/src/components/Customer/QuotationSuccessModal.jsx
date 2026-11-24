@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Printer, X, FileSpreadsheet, FileText } from 'lucide-react';
+import { CheckCircle2, Printer, FileSpreadsheet, FileText } from 'lucide-react';
 import { formatCurrency } from '../../utils/formatters';
 import { exportQuotationToExcel, exportQuotationToPDF } from '../../utils/exportUtils';
 

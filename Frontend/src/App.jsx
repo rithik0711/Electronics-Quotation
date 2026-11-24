@@ -12,7 +12,8 @@ import {
 } from './components/Owner';
 import { PRODUCTS, CATEGORIES } from './data/products';
 import { INITIAL_QUOTATIONS } from './data/sampleQuotations';
-import { Sparkles, PackageSearch, RefreshCcw } from 'lucide-react';
+import { formatCurrency } from './utils/formatters';
+import { PackageSearch, RefreshCcw } from 'lucide-react';
 import './App.css';
 
 export default function App() {

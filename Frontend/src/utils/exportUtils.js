@@ -1,7 +1,6 @@
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { formatCurrency } from './formatters';
 
 /**
  * Format currency specifically for PDF documents using standard Latin ASCII font
