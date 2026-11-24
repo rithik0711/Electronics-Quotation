@@ -281,30 +281,27 @@ export default function App() {
             onViewOwnerDashboard={handleViewOwnerDashboard}
           />
 
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+          <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 w-full flex-1">
             {/* Royal Hero Banner */}
-            <section className="text-center max-w-3xl mx-auto pt-6 pb-10">
-              {/* <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fbf5e6] text-[#946c1a] border border-[#eeddb0] text-xs font-bold tracking-wide uppercase mb-4 shadow-xs">
-                <Sparkles size={14} />
-                <span>Royal & Modern Electrical Quotations</span>
-              </div> */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#1a1c22] tracking-tight leading-tight mb-4">
+            <section className="text-center max-w-3xl mx-auto pt-3 pb-6 sm:pt-6 sm:pb-10">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#1a1c22] tracking-tight leading-tight mb-2 sm:mb-4">
                 Trending Royal Switches, Fans & <span className="text-gold-gradient">Designer Lights</span>
               </h2>
-              {/* <p className="text-base sm:text-lg text-[#575e6d] max-w-2xl mx-auto leading-relaxed">
-                Curated collection of {products.length} premium switches, switch boxes, fans, and luxury lights. Select your products and request an instant quotation.
-              </p> */}
             </section>
 
-            {/* Category Filter Chips */}
-            <section className="mb-8">
-              <div className="flex items-center justify-center flex-wrap gap-2.5 mb-5" role="tablist" aria-label="Product categories">
+            {/* Category Filter Chips - Swipeable on mobile */}
+            <section className="mb-6 sm:mb-8">
+              <div 
+                className="flex items-center sm:justify-center overflow-x-auto no-scrollbar gap-2 pb-2 sm:flex-wrap mb-3.5 sm:mb-5 px-1 -mx-3 px-3 sm:mx-0" 
+                role="tablist" 
+                aria-label="Product categories"
+              >
                 {availableCategories.map(category => (
                   <button
                     key={category}
                     type="button"
-                    className={`px-5 py-2 rounded-full text-sm font-bold transition-all cursor-pointer shadow-xs ${selectedCategory === category
-                      ? 'bg-brand-gradient text-white shadow-[0_4px_14px_rgba(197,155,39,0.28)] scale-105'
+                    className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs whitespace-nowrap flex-shrink-0 active:scale-95 ${selectedCategory === category
+                      ? 'bg-brand-gradient text-white shadow-[0_4px_14px_rgba(197,155,39,0.28)]'
                       : 'bg-white text-[#575e6d] border border-[#d8d4c7] hover:border-[#b38728] hover:text-[#1a1c22] hover:bg-[#fbf5e6]'
                       }`}
                     onClick={() => setSelectedCategory(category)}
@@ -326,7 +323,7 @@ export default function App() {
             </section>
 
             {/* Products Grid */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16" id="products-grid-container">
+            <section className="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6 mb-24 sm:mb-16" id="products-grid-container">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map(product => {
                   const quotationItem = quotationItems.find(item => item.id === product.id);
@@ -341,15 +338,15 @@ export default function App() {
                   );
                 })
               ) : (
-                <div className="col-span-full bg-white rounded-2xl border border-dashed border-[#d8d4c7] p-12 text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-[#fbf5e6] text-[#b38728] flex items-center justify-center mx-auto mb-4">
-                    <PackageSearch size={36} strokeWidth={1.5} />
+                <div className="col-span-full bg-white rounded-2xl border border-dashed border-[#d8d4c7] p-8 sm:p-12 text-center">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#fbf5e6] text-[#b38728] flex items-center justify-center mx-auto mb-4">
+                    <PackageSearch size={32} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg font-bold text-[#1a1c22] mb-1">No matching electrical products found</h3>
-                  <p className="text-sm text-[#575e6d] mb-5">Try searching for switch, switch box, fan, or light.</p>
+                  <h3 className="text-base sm:text-lg font-bold text-[#1a1c22] mb-1">No matching electrical products found</h3>
+                  <p className="text-xs sm:text-sm text-[#575e6d] mb-5">Try searching for switch, switch box, fan, or light.</p>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs active:scale-95"
                     onClick={() => {
                       setSearchQuery('');
                       setSelectedCategory('All');
@@ -380,8 +377,31 @@ export default function App() {
             onClose={() => setSubmittedQuotation(null)}
           />
 
+          {/* Mobile Floating Sticky Quotation Bar */}
+          {quotationItems.length > 0 && (
+            <aside aria-label="Quick Quotation Access" className="fixed bottom-3 inset-x-3 z-40 sm:hidden animate-toast">
+              <button
+                type="button"
+                onClick={() => setIsQuotationModalOpen(true)}
+                className="w-full py-3 px-4 bg-brand-gradient text-white rounded-2xl shadow-[0_6px_22px_rgba(197,155,39,0.45)] flex items-center justify-between font-bold text-sm active:scale-98 transition-transform cursor-pointer border border-white/25"
+                aria-label="Open current quotation drawer"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-6 h-6 rounded-full bg-white text-[#946c1a] flex items-center justify-center text-xs font-black shadow-xs">
+                    {quotationItems.reduce((acc, i) => acc + i.quantity, 0)}
+                  </span>
+                  <span>View Quotation</span>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-sm font-extrabold">
+                  <span>{formatCurrency(quotationItems.reduce((acc, i) => acc + i.price * i.quantity, 0))}</span>
+                  <span className="text-base">&rarr;</span>
+                </div>
+              </button>
+            </aside>
+          )}
+
           {/* Clean Light Theme Footer */}
-          <footer className="mt-auto border-t border-[#eae7de] py-6 text-center text-xs text-[#8c93a3] bg-white">
+          <footer className="mt-auto border-t border-[#eae7de] py-6 text-center text-xs text-[#8c93a3] bg-white pb-safe">
             <p>© {new Date().getFullYear()} Royal Luxe Electricals. Premium Quotation Portal.</p>
           </footer>
         </>

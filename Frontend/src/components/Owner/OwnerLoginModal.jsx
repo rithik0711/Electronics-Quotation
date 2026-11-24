@@ -43,9 +43,9 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={onClose}>
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in" onClick={onClose}>
       <div 
-        className="relative bg-white rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-2xl border border-[#eeddb0] animate-scale-up my-auto"
+        className="relative bg-white rounded-2xl w-full max-w-md p-5 sm:p-8 shadow-2xl border border-[#eeddb0] animate-scale-up my-auto"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -54,7 +54,7 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
         {/* Close Button */}
         <button 
           type="button" 
-          className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-[#eae7de] hover:bg-[#f6f5ef] text-[#8c93a3] hover:text-[#1a1c22] flex items-center justify-center cursor-pointer transition-colors" 
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-8 h-8 rounded-lg border border-[#eae7de] hover:bg-[#f6f5ef] text-[#8c93a3] hover:text-[#1a1c22] flex items-center justify-center cursor-pointer transition-colors" 
           onClick={onClose}
           aria-label="Close owner login"
         >
@@ -62,28 +62,28 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
         </button>
 
         {/* Header Icon */}
-        <div className="flex justify-center mb-4">
-          <div className="w-16 h-16 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shadow-[0_6px_20px_rgba(197,155,39,0.3)]">
-            <ShieldCheck size={32} />
+        <div className="flex justify-center mb-3 sm:mb-4">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shadow-[0_6px_20px_rgba(197,155,39,0.3)]">
+            <ShieldCheck className="w-7 h-7 sm:w-8 sm:h-8" />
           </div>
         </div>
 
-        <h2 id="owner-login-title" className="text-xl font-extrabold text-[#1a1c22] text-center mb-1">Owner Portal Access</h2>
-        <p className="text-xs text-[#575e6d] text-center leading-relaxed mb-5">
+        <h2 id="owner-login-title" className="text-lg sm:text-xl font-extrabold text-[#1a1c22] text-center mb-1">Owner Portal Access</h2>
+        <p className="text-xs text-[#575e6d] text-center leading-relaxed mb-4 sm:mb-5">
           Sign in to manage quotations, track orders, and export Excel or PDF reports.
         </p>
 
         {/* Demo Helper Box */}
         <div 
-          className="flex items-center justify-between bg-[#fbf5e6] border border-dashed border-[#c59b27] px-3.5 py-2.5 rounded-xl mb-5 cursor-pointer hover:bg-[#f7eed5] transition-all"
+          className="flex items-center justify-between bg-[#fbf5e6] border border-dashed border-[#c59b27] px-3 sm:px-3.5 py-2.5 rounded-xl mb-4 sm:mb-5 cursor-pointer hover:bg-[#f7eed5] active:scale-98 transition-all"
           onClick={handleFillCredentials} 
           title="Click to autofill credentials"
         >
-          <div className="flex items-center gap-2 text-xs text-[#946c1a] font-medium">
-            <Sparkles size={14} className="text-[#c59b27]" />
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-[#946c1a] font-medium">
+            <Sparkles size={13} className="text-[#c59b27] flex-shrink-0" />
             <span>Authorized: <b className="font-bold text-[#1a1c22]">rithik0711</b> / <b className="font-bold text-[#1a1c22]">123456</b></span>
           </div>
-          <span className="text-[10px] font-black uppercase text-white bg-[#b38728] px-2 py-0.5 rounded-full">Auto Fill</span>
+          <span className="text-[9px] sm:text-[10px] font-black uppercase text-white bg-[#b38728] px-2 py-0.5 rounded-full flex-shrink-0">Auto Fill</span>
         </div>
 
         {error && (
@@ -93,10 +93,10 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4" noValidate>
           {/* Username */}
           <div>
-            <label htmlFor="owner-username-input" className="block text-xs font-bold text-[#1a1c22] mb-1.5">
+            <label htmlFor="owner-username-input" className="block text-xs font-bold text-[#1a1c22] mb-1">
               Username <span className="text-red-500">*</span>
             </label>
             <div className="relative flex items-center">
@@ -104,7 +104,7 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
               <input
                 id="owner-username-input"
                 type="text"
-                className="w-full pl-10 pr-4 py-2.5 text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 text-base sm:text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none transition-all"
                 placeholder="Enter username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -116,7 +116,7 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
 
           {/* Password */}
           <div>
-            <label htmlFor="owner-password-input" className="block text-xs font-bold text-[#1a1c22] mb-1.5">
+            <label htmlFor="owner-password-input" className="block text-xs font-bold text-[#1a1c22] mb-1">
               Password <span className="text-red-500">*</span>
             </label>
             <div className="relative flex items-center">
@@ -124,7 +124,7 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
               <input
                 id="owner-password-input"
                 type={showPassword ? 'text' : 'password'}
-                className="w-full pl-10 pr-10 py-2.5 text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none transition-all"
+                className="w-full pl-10 pr-10 py-2.5 text-base sm:text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none transition-all"
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -145,7 +145,7 @@ export default function OwnerLoginModal({ isOpen, onClose, onLoginSuccess }) {
           <button
             id="login-submit-btn"
             type="submit"
-            className="w-full py-3 px-4 bg-gold-btn text-white font-bold text-sm rounded-xl flex items-center justify-center shadow-[0_4px_16px_rgba(197,155,39,0.28)] transition-all cursor-pointer hover:shadow-[0_6px_20px_rgba(197,155,39,0.38)] mt-2"
+            className="w-full py-3 px-4 bg-gold-btn text-white font-bold text-sm sm:text-base rounded-xl flex items-center justify-center shadow-[0_4px_16px_rgba(197,155,39,0.28)] transition-all cursor-pointer hover:shadow-[0_6px_20px_rgba(197,155,39,0.38)] active:scale-98 min-h-[46px] mt-2"
             disabled={isLoading}
           >
             {isLoading ? 'Verifying Credentials...' : 'Sign In to Owner Portal'}

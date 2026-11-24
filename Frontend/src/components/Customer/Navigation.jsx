@@ -22,10 +22,10 @@ export default function Navigation({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#eae7de] shadow-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand & Logo */}
         <div 
-          className="flex items-center gap-3 cursor-pointer select-none group"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer select-none group flex-shrink-0"
           id="nav-brand-logo"
           onClick={() => {
             setSearchQuery('');
@@ -33,17 +33,19 @@ export default function Navigation({
           }}
           title="Royal Luxe Electricals"
         >
-          <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white shadow-[0_4px_16px_rgba(197,155,39,0.3)] group-hover:scale-105 transition-transform">
-            <Crown size={22} strokeWidth={2.2} />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white shadow-[0_4px_16px_rgba(197,155,39,0.3)] group-hover:scale-105 transition-transform flex-shrink-0">
+            <Crown className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.2} />
           </div>
           <div>
-            <h1 className="text-xl font-extrabold text-[#1a1c22] tracking-tight leading-none">Royal Luxe</h1>
-            <span className="text-[10px] font-bold text-[#b38728] tracking-wider uppercase block mt-0.5">Electrical Quotations</span>
+            <h1 className="text-base sm:text-xl font-extrabold text-[#1a1c22] tracking-tight leading-none">Royal Luxe</h1>
+            <span className="hidden min-[380px]:block text-[9px] sm:text-[10px] font-bold text-[#b38728] tracking-wider uppercase mt-0.5">
+              Electrical Quotations
+            </span>
           </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex-1 max-w-md relative flex items-center hidden sm:flex">
+        {/* Desktop Search Bar */}
+        <div className="flex-1 max-w-md relative hidden sm:flex items-center">
           <Search size={18} className="absolute left-3.5 text-[#8c93a3] pointer-events-none" />
           <input
             id="product-search-input"
@@ -67,12 +69,12 @@ export default function Navigation({
         </div>
 
         {/* Top Right Navigation Actions: Owner button & Quotation Cart */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           {/* Owner Button */}
           <button
             id="owner-btn"
             type="button"
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-all cursor-pointer shadow-xs ${
+            className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold border transition-all cursor-pointer shadow-xs active:scale-95 ${
               isOwnerLoggedIn 
                 ? 'bg-[#fdfaf3] border-[#b38728] text-[#946c1a] font-bold' 
                 : 'bg-white border-[#d8d4c7] hover:border-[#b38728] text-[#1a1c22] hover:bg-[#fbf5e6]'
@@ -81,8 +83,8 @@ export default function Navigation({
             title={isOwnerLoggedIn ? "Open Owner Portal (Logged in)" : "Owner Portal Login"}
             aria-label="Owner Portal"
           >
-            <ShieldCheck size={18} className={isOwnerLoggedIn ? "text-[#b38728]" : "text-[#575e6d]"} />
-            <span>{isOwnerLoggedIn ? "Owner Portal" : "Owner"}</span>
+            <ShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+            <span className="hidden min-[360px]:inline">{isOwnerLoggedIn ? "Portal" : "Owner"}</span>
             {isOwnerLoggedIn && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Logged in" />}
           </button>
 
@@ -90,46 +92,49 @@ export default function Navigation({
           <button
             id="view-quotation-btn"
             type="button"
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-sm font-bold bg-white border-1.5 border-[#b38728] hover:bg-[#fbf5e6] text-[#1a1c22] transition-all shadow-[0_2px_8px_rgba(197,155,39,0.12)] cursor-pointer"
+            className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-white border-1.5 border-[#b38728] hover:bg-[#fbf5e6] text-[#1a1c22] transition-all shadow-[0_2px_8px_rgba(197,155,39,0.12)] cursor-pointer active:scale-95"
             onClick={onOpenQuotation}
             title="View Quotation Estimate"
             aria-label={`View Quotation with ${totalItemCount} items`}
           >
-            <FileSpreadsheet size={18} className="text-[#b38728]" />
-            <span>Quotation</span>
+            <FileSpreadsheet className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#b38728]" />
+            <span className="hidden sm:inline">Quotation</span>
             
-            {totalItemCount > 0 && (
+            {totalItemCount > 0 ? (
               <>
-                <span className="bg-[#b38728] text-white rounded-full text-xs font-black px-2 py-0.5 min-w-[20px] text-center" id="quotation-badge-count">
+                <span className="bg-[#b38728] text-white rounded-full text-[11px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 min-w-[18px] sm:min-w-[20px] text-center" id="quotation-badge-count">
                   {totalItemCount}
                 </span>
-                <span className="font-mono text-xs font-extrabold text-[#946c1a]">
+                <span className="font-mono text-xs font-extrabold text-[#946c1a] hidden min-[440px]:inline">
                   {formatCurrency(quotationTotal)}
                 </span>
               </>
+            ) : (
+              <span className="text-xs text-[#8c93a3] font-normal hidden min-[440px]:inline">0 items</span>
             )}
           </button>
         </div>
       </div>
 
       {/* Mobile Search Input */}
-      <div className="px-4 pb-3 sm:hidden">
+      <div className="px-3 pb-2.5 sm:hidden">
         <div className="relative flex items-center">
           <Search size={16} className="absolute left-3.5 text-[#8c93a3] pointer-events-none" />
           <input
             type="text"
-            className="w-full pl-10 pr-9 py-2 bg-[#f6f5ef] focus:bg-white border border-[#eae7de] focus:border-[#b38728] rounded-full text-sm text-[#1a1c22] placeholder-[#8c93a3] outline-none"
-            placeholder="Search products..."
+            className="w-full pl-9 pr-9 py-2 bg-[#f6f5ef] focus:bg-white border border-[#eae7de] focus:border-[#b38728] rounded-full text-base placeholder-[#8c93a3] text-[#1a1c22] outline-none"
+            placeholder="Search switches, lights, fans..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           {searchQuery && (
             <button 
               type="button" 
-              className="absolute right-3 text-[#8c93a3] hover:text-[#1a1c22] p-1 cursor-pointer"
+              className="absolute right-2.5 text-[#8c93a3] hover:text-[#1a1c22] p-1.5 rounded-full cursor-pointer"
               onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
             >
-              <X size={14} />
+              <X size={15} />
             </button>
           )}
         </div>

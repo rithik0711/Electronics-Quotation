@@ -12,12 +12,12 @@ import {
   Mail, 
   ChevronDown, 
   CheckCircle2,
-  ShoppingBag,
-  Download,
-  RotateCcw,
-  Check,
-  PlusCircle,
-  Package
+  ShoppingBag, 
+  Download, 
+  RotateCcw, 
+  Check, 
+  PlusCircle, 
+  Package 
 } from 'lucide-react';
 import AddProductModal from './AddProductModal';
 import { formatCurrency } from '../../utils/formatters';
@@ -188,82 +188,151 @@ export default function OwnerDashboard({
 
   return (
     <div className="min-h-screen bg-[#fcfbf9] flex flex-col font-sans text-[#1a1c22]">
-      {/* Top Banner / Navigation for Owner */}
+      {/* Top Banner / Navigation for Owner - Responsive for mobile and desktop */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#eae7de] shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
-          <div className="flex items-center gap-4">
-            <button
-              id="back-to-store-btn"
-              type="button"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#d8d4c7] hover:border-[#1a1c22] rounded-full text-xs sm:text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs hover:-translate-x-0.5"
-              onClick={onBackToStore}
-              title="Return to Electrical Products Store"
-            >
-              <ArrowLeft size={16} />
-              <span>Back to Store</span>
-            </button>
-            <div>
-              <h1 className="text-lg sm:text-xl font-extrabold text-[#1a1c22] leading-none">Owner Quotation Portal</h1>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-                  <CheckCircle2 size={13} />
-                  <span>Logged in as <b>rithik0711</b></span>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5">
+          {/* Mobile Top Header (< sm) */}
+          <div className="flex sm:hidden flex-col gap-2.5">
+            {/* Top row: Back + Title + Logout */}
+            <div className="flex items-center justify-between gap-2">
+              <button
+                id="back-to-store-btn-mobile"
+                type="button"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#d8d4c7] hover:border-[#1a1c22] rounded-full text-xs font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs active:scale-95"
+                onClick={onBackToStore}
+                title="Return to Electrical Products Store"
+              >
+                <ArrowLeft size={14} />
+                <span>Store</span>
+              </button>
+
+              <h1 className="text-base font-extrabold text-[#1a1c22] truncate text-center">Owner Portal</h1>
+
+              <button
+                id="owner-logout-btn-mobile"
+                type="button"
+                className="inline-flex items-center gap-1 px-3 py-1.5 bg-white text-red-600 hover:bg-red-50 border border-red-200 font-bold text-xs rounded-full transition-all cursor-pointer shadow-xs active:scale-95"
+                onClick={onLogout}
+                title="Logout"
+              >
+                <LogOut size={13} />
+                <span>Logout</span>
+              </button>
+            </div>
+
+            {/* Bottom row: Badges + Action Buttons */}
+            <div className="flex items-center justify-between gap-2 pt-1 border-t border-[#eae7de]/60">
+              <div className="flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                  <CheckCircle2 size={11} />
+                  <span>rithik0711</span>
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full" title="Total no. of products in catalog">
-                  <Package size={12} />
-                  <span><b>{products.length}</b> Products</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full">
+                  <Package size={11} />
+                  <span>{products.length} Products</span>
                 </span>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 bg-brand-gradient text-white font-bold text-xs rounded-full shadow-xs active:scale-95 cursor-pointer"
+                  onClick={() => setIsAddProductOpen(true)}
+                  title="Add New Product"
+                >
+                  <PlusCircle size={13} />
+                  <span>+ Product</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 p-1.5 bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold text-xs rounded-full cursor-pointer shadow-xs active:scale-95"
+                  onClick={handleExportAll}
+                  title="Export All to Excel"
+                  aria-label="Export All to Excel"
+                >
+                  <FileSpreadsheet size={15} />
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            {/* Add Product Button */}
-            <button
-              id="owner-add-product-btn"
-              type="button"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-gradient text-white font-bold text-xs sm:text-sm rounded-full shadow-[0_4px_14px_rgba(197,155,39,0.28)] hover:shadow-[0_6px_18px_rgba(197,155,39,0.38)] transition-all cursor-pointer"
-              onClick={() => setIsAddProductOpen(true)}
-              title={`Add New Product (${products.length} Products currently in catalog)`}
-            >
-              <PlusCircle size={16} />
-              <span>Add Product</span>
-              <span className="bg-white/30 text-white font-extrabold text-[11px] px-2 py-0.5 rounded-full ml-0.5">
-                {products.length}
-              </span>
-            </button>
+          {/* Desktop Header (>= sm) */}
+          <div className="hidden sm:flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <button
+                id="back-to-store-btn"
+                type="button"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#d8d4c7] hover:border-[#1a1c22] rounded-full text-xs sm:text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs hover:-translate-x-0.5 active:scale-95"
+                onClick={onBackToStore}
+                title="Return to Electrical Products Store"
+              >
+                <ArrowLeft size={16} />
+                <span>Back to Store</span>
+              </button>
+              <div>
+                <h1 className="text-lg sm:text-xl font-extrabold text-[#1a1c22] leading-none">Owner Quotation Portal</h1>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700">
+                    <CheckCircle2 size={13} />
+                    <span>Logged in as <b>rithik0711</b></span>
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full" title="Total no. of products in catalog">
+                    <Package size={12} />
+                    <span><b>{products.length}</b> Products</span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-            <button
-              id="export-all-excel-btn"
-              type="button"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 font-bold text-xs sm:text-sm rounded-full transition-all cursor-pointer shadow-xs"
-              onClick={handleExportAll}
-              title="Download master Excel spreadsheet with all quotations"
-            >
-              <FileSpreadsheet size={16} />
-              <span className="hidden sm:inline">Export All (Excel)</span>
-            </button>
+            <div className="flex items-center gap-2.5">
+              {/* Add Product Button */}
+              <button
+                id="owner-add-product-btn"
+                type="button"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-brand-gradient text-white font-bold text-xs sm:text-sm rounded-full shadow-[0_4px_14px_rgba(197,155,39,0.28)] hover:shadow-[0_6px_18px_rgba(197,155,39,0.38)] transition-all cursor-pointer active:scale-95"
+                onClick={() => setIsAddProductOpen(true)}
+                title={`Add New Product (${products.length} Products currently in catalog)`}
+              >
+                <PlusCircle size={16} />
+                <span>Add Product</span>
+                <span className="bg-white/30 text-white font-extrabold text-[11px] px-2 py-0.5 rounded-full ml-0.5">
+                  {products.length}
+                </span>
+              </button>
 
-            <button
-              id="owner-logout-btn"
-              type="button"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 border border-red-200 font-bold text-xs sm:text-sm rounded-full transition-all cursor-pointer shadow-xs"
-              onClick={onLogout}
-              title="Logout from Owner Account"
-            >
-              <LogOut size={16} />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
+              <button
+                id="export-all-excel-btn"
+                type="button"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 font-bold text-xs sm:text-sm rounded-full transition-all cursor-pointer shadow-xs active:scale-95"
+                onClick={handleExportAll}
+                title="Download master Excel spreadsheet with all quotations"
+              >
+                <FileSpreadsheet size={16} />
+                <span>Export All (Excel)</span>
+              </button>
+
+              <button
+                id="owner-logout-btn"
+                type="button"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 border border-red-200 font-bold text-xs sm:text-sm rounded-full transition-all cursor-pointer shadow-xs active:scale-95"
+                onClick={onLogout}
+                title="Logout from Owner Account"
+              >
+                <LogOut size={16} />
+                <span>Logout</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
-        {/* Metric Cards: Total Quotations, Total Purchased, Total Pipeline Value, and Total Products */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 w-full flex-1">
+        {/* Metric Cards: 2x2 grid on mobile, 4 columns on desktop */}
+        <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 mb-6 sm:mb-8">
           {/* Card 1: Total Quotations */}
           <div 
-            className={`bg-white rounded-2xl p-5 border shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between ${
+            className={`bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between active:scale-[0.98] ${
               viewMode === 'submitted' 
                 ? 'border-[#b38728] ring-2 ring-[#c59b27]/25' 
                 : 'border-[#eae7de] hover:border-[#eeddb0]'
@@ -271,16 +340,16 @@ export default function OwnerDashboard({
             onClick={() => setViewMode('submitted')}
             title="Click to view submitted customer inquiries"
           >
-            <span className="text-xs font-bold uppercase tracking-wider text-[#575e6d] mb-1">Total Quotations</span>
-            <div className="text-3xl font-extrabold text-[#1a1c22] my-1">{quotations.length}</div>
-            <span className="text-xs text-[#8c93a3] font-medium">
-              {submittedQuotations.length} active customer inquiries
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#575e6d] mb-1">Total Quotations</span>
+            <div className="text-xl sm:text-3xl font-extrabold text-[#1a1c22] my-0.5 sm:my-1">{quotations.length}</div>
+            <span className="text-[10px] sm:text-xs text-[#8c93a3] font-medium truncate">
+              {submittedQuotations.length} active inquiries
             </span>
           </div>
 
           {/* Card 2: Total Purchased */}
           <div 
-            className={`bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl p-5 border shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between ${
+            className={`bg-gradient-to-b from-white to-emerald-50/40 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between active:scale-[0.98] ${
               viewMode === 'purchased' 
                 ? 'border-emerald-600 ring-2 ring-emerald-500/25' 
                 : 'border-emerald-200'
@@ -288,9 +357,9 @@ export default function OwnerDashboard({
             onClick={() => setViewMode('purchased')}
             title="Click to view all purchased quotations"
           >
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">Total Purchased</span>
-            <div className="text-3xl font-extrabold text-emerald-600 my-1">{purchasedQuotations.length}</div>
-            <span className="text-xs text-emerald-700/80 font-medium">
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">Total Purchased</span>
+            <div className="text-xl sm:text-3xl font-extrabold text-emerald-600 my-0.5 sm:my-1">{purchasedQuotations.length}</div>
+            <span className="text-[10px] sm:text-xs text-emerald-700/80 font-medium truncate">
               {purchasedQuotations.length > 0 
                 ? `${formatCurrency(purchasedTotalValue)} converted` 
                 : '0 converted orders'}
@@ -298,54 +367,56 @@ export default function OwnerDashboard({
           </div>
 
           {/* Card 3: Total Pipeline Value */}
-          <div className="bg-gradient-to-b from-white to-[#fdfbf7] rounded-2xl p-5 border border-[#eeddb0] shadow-xs flex flex-col justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#946c1a] mb-1">Total Pipeline Value</span>
-            <div className="text-3xl font-extrabold text-[#946c1a] font-mono my-1">{formatCurrency(totalValue)}</div>
-            <span className="text-xs text-[#8c93a3] font-medium">Inclusive of 18% GST</span>
+          <div className="bg-gradient-to-b from-white to-[#fdfbf7] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border border-[#eeddb0] shadow-xs flex flex-col justify-between">
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#946c1a] mb-1">Pipeline Value</span>
+            <div className="text-lg sm:text-3xl font-extrabold text-[#946c1a] font-mono my-0.5 sm:my-1 truncate">
+              {formatCurrency(totalValue)}
+            </div>
+            <span className="text-[10px] sm:text-xs text-[#8c93a3] font-medium truncate">Inclusive of 18% GST</span>
           </div>
 
           {/* Card 4: Total Products */}
           <div 
-            className="bg-gradient-to-b from-white to-sky-50/40 rounded-2xl p-5 border border-sky-200 shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between"
+            className="bg-gradient-to-b from-white to-sky-50/40 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border border-sky-200 shadow-xs cursor-pointer hover:shadow-md transition-all flex flex-col justify-between active:scale-[0.98]"
             onClick={() => setIsAddProductOpen(true)}
             title="Total no. of products in catalog. Click to add a new product."
           >
-            <span className="text-xs font-bold uppercase tracking-wider text-sky-800 mb-1">Total Products</span>
-            <div className="text-3xl font-extrabold text-sky-600 my-1">{products.length}</div>
-            <span className="text-xs text-sky-700/80 font-medium">Catalog electrical items</span>
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-sky-800 mb-1">Total Products</span>
+            <div className="text-xl sm:text-3xl font-extrabold text-sky-600 my-0.5 sm:my-1">{products.length}</div>
+            <span className="text-[10px] sm:text-xs text-sky-700/80 font-medium truncate">Catalog electrical items</span>
           </div>
         </section>
 
-        {/* Search & Header Section */}
-        <div className="flex items-center justify-between gap-4 mb-6 flex-wrap lg:flex-nowrap">
+        {/* Search & Header Section - Fully responsive row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-6">
           <div>
-            <h2 className="text-2xl font-extrabold text-[#1a1c22]">
+            <h2 className="text-lg sm:text-2xl font-extrabold text-[#1a1c22]">
               {viewMode === 'purchased' ? 'Purchased Customer Quotations' : 'Submitted Customer Quotations'}
             </h2>
-            <p className="text-xs sm:text-sm text-[#575e6d] mt-0.5">
+            <p className="text-[11px] sm:text-sm text-[#575e6d] mt-0.5">
               {viewMode === 'purchased' 
-                ? 'All customer quotations marked as purchased. Inspect line items and preview/download Excel or PDF.'
-                : 'View customer details, inspect line items, and preview/download quotations in Excel (.xlsx) or PDF (.pdf) formats.'}
+                ? 'All customer quotations marked as purchased. Preview or download Excel and PDF.'
+                : 'Inspect customer inquiries, line items, and preview/download Excel or PDF quotations.'}
             </p>
           </div>
 
           {/* Header Controls: Search Bar and Purchased Quotation Button side-by-side */}
-          <div className="flex items-center gap-3 flex-shrink-0 w-full lg:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 w-full sm:w-auto">
             {/* Search Bar */}
-            <div className="relative flex-1 lg:w-80 flex-shrink-0">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8c93a3] pointer-events-none" />
+            <div className="relative flex-1 sm:w-72 md:w-80 flex-shrink-0">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8c93a3] pointer-events-none" />
               <input
                 id="owner-quotation-search"
                 type="text"
-                placeholder={viewMode === 'purchased' ? "Search purchased quotations..." : "Search by ID, name, mobile, email..."}
+                placeholder={viewMode === 'purchased' ? "Search purchased..." : "Search ID, name, mobile..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-9 py-2 bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-full text-sm text-[#1a1c22] placeholder-[#8c93a3] outline-none transition-all"
+                className="w-full pl-9 sm:pl-10 pr-8 py-2 bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-full text-base sm:text-sm text-[#1a1c22] placeholder-[#8c93a3] outline-none transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8c93a3] hover:text-[#1a1c22] p-1 cursor-pointer"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8c93a3] hover:text-[#1a1c22] p-1 cursor-pointer"
                   onClick={() => setSearchQuery('')}
                   title="Clear filter"
                 >
@@ -358,7 +429,7 @@ export default function OwnerDashboard({
             <button
               id="btn-purchased-quotation-toggle"
               type="button"
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-xs sm:text-sm transition-all flex-shrink-0 shadow-xs cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full font-bold text-xs sm:text-sm transition-all flex-shrink-0 shadow-xs cursor-pointer active:scale-95 whitespace-nowrap ${
                 viewMode === 'purchased' 
                   ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white border border-emerald-700 shadow-[0_4px_14px_rgba(5,150,105,0.25)]' 
                   : 'bg-white border border-[#d8d4c7] hover:border-[#b38728] text-[#1a1c22] hover:bg-[#fbf5e6]'
@@ -366,9 +437,9 @@ export default function OwnerDashboard({
               onClick={() => setViewMode(prev => prev === 'purchased' ? 'submitted' : 'purchased')}
               title={viewMode === 'purchased' ? "Switch to Submitted Quotations" : "View All Purchased Quotations"}
             >
-              <ShoppingBag size={15} />
-              <span>{viewMode === 'purchased' ? 'Submitted Quotations' : 'Purchased Quotation'}</span>
-              <span className={`text-xs font-black px-2 py-0.5 rounded-full ${
+              <ShoppingBag size={14} />
+              <span>{viewMode === 'purchased' ? 'Submitted' : 'Purchased'}</span>
+              <span className={`text-[10px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 rounded-full ${
                 viewMode === 'purchased' ? 'bg-white/25 text-white' : 'bg-[#f6f5ef] text-[#1a1c22]'
               }`}>
                 {viewMode === 'purchased' ? submittedQuotations.length : purchasedQuotations.length}
@@ -379,14 +450,14 @@ export default function OwnerDashboard({
 
         {/* Quotations List */}
         {filteredQuotations.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-[#d8d4c7] p-12 text-center my-6">
+          <div className="bg-white rounded-2xl border border-dashed border-[#d8d4c7] p-8 sm:p-12 text-center my-6">
             {viewMode === 'purchased' ? (
               <>
-                <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4 border border-emerald-200">
-                  <ShoppingBag size={36} />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-emerald-200">
+                  <ShoppingBag size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-[#1a1c22] mb-1">No Purchased Quotations Found</h3>
-                <p className="text-sm text-[#575e6d] max-w-md mx-auto mb-5">
+                <h3 className="text-base sm:text-lg font-bold text-[#1a1c22] mb-1">No Purchased Quotations Found</h3>
+                <p className="text-xs sm:text-sm text-[#575e6d] max-w-md mx-auto mb-4 sm:mb-5">
                   {searchQuery 
                     ? `No purchased records match "${searchQuery}". Try a different keyword.`
                     : 'No quotations have been moved to purchased yet. Click the "Purchased" button on any quotation to track it here.'}
@@ -394,7 +465,7 @@ export default function OwnerDashboard({
                 {searchQuery ? (
                   <button
                     type="button"
-                    className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs"
+                    className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs active:scale-95"
                     onClick={() => setSearchQuery('')}
                   >
                     Clear Search
@@ -402,7 +473,7 @@ export default function OwnerDashboard({
                 ) : (
                   <button
                     type="button"
-                    className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs transition-all cursor-pointer"
+                    className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs transition-all cursor-pointer active:scale-95"
                     onClick={() => setViewMode('submitted')}
                   >
                     View Submitted Quotations
@@ -411,11 +482,11 @@ export default function OwnerDashboard({
               </>
             ) : (
               <>
-                <div className="w-16 h-16 rounded-2xl bg-[#fbf5e6] text-[#b38728] flex items-center justify-center mx-auto mb-4 border border-[#eeddb0]">
-                  <FileSpreadsheet size={36} />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#fbf5e6] text-[#b38728] flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-[#eeddb0]">
+                  <FileSpreadsheet size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-[#1a1c22] mb-1">No Submitted Quotations Found</h3>
-                <p className="text-sm text-[#575e6d] max-w-md mx-auto mb-5">
+                <h3 className="text-base sm:text-lg font-bold text-[#1a1c22] mb-1">No Submitted Quotations Found</h3>
+                <p className="text-xs sm:text-sm text-[#575e6d] max-w-md mx-auto mb-4 sm:mb-5">
                   {searchQuery 
                     ? `No quotation records match "${searchQuery}". Try a different keyword.`
                     : 'All customer quotations have been marked as purchased or none submitted yet.'}
@@ -423,7 +494,7 @@ export default function OwnerDashboard({
                 {searchQuery ? (
                   <button
                     type="button"
-                    className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs"
+                    className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] text-sm font-bold text-[#1a1c22] transition-all cursor-pointer shadow-xs active:scale-95"
                     onClick={() => setSearchQuery('')}
                   >
                     Clear Search
@@ -431,7 +502,7 @@ export default function OwnerDashboard({
                 ) : (
                   <button
                     type="button"
-                    className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs transition-all cursor-pointer"
+                    className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs transition-all cursor-pointer active:scale-95"
                     onClick={() => setViewMode('purchased')}
                   >
                     View Purchased Quotations ({purchasedQuotations.length})
@@ -441,7 +512,7 @@ export default function OwnerDashboard({
             )}
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3.5 sm:space-y-4">
             {filteredQuotations.map((quote) => {
               const formattedDate = new Date(quote.createdAt || Date.now()).toLocaleDateString('en-IN', {
                 year: 'numeric',
@@ -454,14 +525,119 @@ export default function OwnerDashboard({
               return (
                 <div 
                   key={quote.quotationId} 
-                  className={`bg-white rounded-2xl border border-[#eae7de] hover:border-[#eeddb0] shadow-xs hover:shadow-md transition-all p-5 ${
+                  className={`bg-white rounded-xl sm:rounded-2xl border border-[#eae7de] hover:border-[#eeddb0] shadow-xs hover:shadow-md transition-all p-3.5 sm:p-5 ${
                     quote.isPurchased ? 'border-l-4 border-l-emerald-500' : ''
                   }`}
                   id={`quote-card-${quote.quotationId}`}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 items-center">
+                  {/* ========================================================
+                      MOBILE CARD LAYOUT (< md) - Intuitive & Touch-Friendly
+                      ======================================================== */}
+                  <div className="flex flex-col gap-3 md:hidden">
+                    {/* Top Row: Quote ID & Date on Left, Price on Right */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <span className="font-mono text-xs font-black text-[#946c1a] bg-[#fbf5e6] px-2.5 py-1 rounded-md inline-block">
+                          {quote.quotationId}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-[11px] text-[#8c93a3] mt-1 font-medium block">
+                          <Calendar size={12} />
+                          {formattedDate}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-mono text-base font-extrabold text-[#946c1a]">
+                          {formatCurrency(quote.totals?.total || 0)}
+                        </div>
+                        <div className="text-[11px] text-[#575e6d]">
+                          {quote.totals?.itemCount || quote.items?.length} items • GST incl.
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Customer Info Box */}
+                    <div className="bg-[#faf9f6] p-2.5 rounded-xl border border-[#eae7de] text-xs">
+                      <div className="flex items-center gap-1.5 font-bold text-[#1a1c22]">
+                        <User size={14} className="text-[#b38728] flex-shrink-0" />
+                        <span className="truncate">{quote.customer?.name || 'Customer'}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-[11px] text-[#575e6d] mt-1 flex-wrap">
+                        <a href={`tel:${quote.customer?.mobile}`} className="inline-flex items-center gap-1 hover:text-[#b38728] transition-colors">
+                          <Phone size={11} className="text-[#8c93a3]" /> {quote.customer?.mobile}
+                        </a>
+                        <a href={`mailto:${quote.customer?.email}`} className="inline-flex items-center gap-1 hover:text-[#b38728] transition-colors truncate">
+                          <Mail size={11} className="text-[#8c93a3]" /> {quote.customer?.email}
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons Row on Mobile */}
+                    <div className="grid grid-cols-4 gap-1.5 pt-0.5">
+                      {/* Excel */}
+                      <button
+                        type="button"
+                        className="py-2 px-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
+                        onClick={(e) => handleOpenExcelPreview(quote, e)}
+                        title="View Excel spreadsheet before downloading"
+                      >
+                        <FileSpreadsheet size={13} />
+                        <span>Excel</span>
+                      </button>
+
+                      {/* PDF */}
+                      <button
+                        type="button"
+                        className="py-2 px-1 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
+                        onClick={(e) => handleOpenPdfPreview(quote, e)}
+                        title="View PDF document before downloading"
+                      >
+                        <FileText size={13} />
+                        <span>PDF</span>
+                      </button>
+
+                      {/* Purchased */}
+                      {!quote.isPurchased ? (
+                        <button
+                          type="button"
+                          className="py-2 px-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 font-bold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
+                          onClick={(e) => handleMarkPurchased(quote, e)}
+                          title="Mark as purchased"
+                        >
+                          <ShoppingBag size={13} />
+                          <span>Buy</span>
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="py-2 px-1 rounded-lg bg-white text-emerald-700 border border-emerald-300 font-bold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
+                          onClick={(e) => handleRevertPurchased(quote, e)}
+                          title="Undo purchased status"
+                        >
+                          <Check size={12} strokeWidth={2.5} />
+                          <span className="text-[11px]">Done</span>
+                        </button>
+                      )}
+
+                      {/* Details View */}
+                      <button
+                        type="button"
+                        className="py-2 px-1 rounded-lg bg-[#f6f5ef] hover:bg-[#eae7de] border border-[#d8d4c7] text-[#575e6d] hover:text-[#1a1c22] font-bold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer active:scale-95"
+                        onClick={(e) => handleOpenDetails(quote, e)}
+                        title="View Quotation Details"
+                        aria-label="View Quotation Details"
+                      >
+                        <ChevronDown size={14} />
+                        <span>View</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* ========================================================
+                      DESKTOP CARD ROW (>= md) - Clean 12-Column Table Row
+                      ======================================================== */}
+                  <div className="hidden md:grid md:grid-cols-12 gap-4 items-center">
                     {/* ID & Date */}
-                    <div className="lg:col-span-3">
+                    <div className="md:col-span-3">
                       <span className="font-mono text-xs font-black text-[#946c1a] bg-[#fbf5e6] px-2.5 py-1 rounded-md inline-block">
                         {quote.quotationId}
                       </span>
@@ -472,7 +648,7 @@ export default function OwnerDashboard({
                     </div>
 
                     {/* Customer Info */}
-                    <div className="lg:col-span-4">
+                    <div className="md:col-span-4">
                       <div className="flex items-center gap-1.5 font-bold text-sm text-[#1a1c22]">
                         <User size={15} className="text-[#b38728] flex-shrink-0" />
                         <span className="truncate">{quote.customer?.name || 'Customer'}</span>
@@ -488,7 +664,7 @@ export default function OwnerDashboard({
                     </div>
 
                     {/* Price & Summary */}
-                    <div className="lg:col-span-2">
+                    <div className="md:col-span-2">
                       <div className="font-mono text-lg font-extrabold text-[#946c1a]">
                         {formatCurrency(quote.totals?.total || 0)}
                       </div>
@@ -497,13 +673,13 @@ export default function OwnerDashboard({
                       </div>
                     </div>
 
-                    {/* Actions Col */}
-                    <div className="lg:col-span-3 flex items-center justify-end gap-2 flex-wrap">
+                    {/* Actions Col: Excel, PDF, Purchased, Details */}
+                    <div className="md:col-span-3 flex items-center justify-end gap-2 flex-wrap">
                       {/* Excel Button */}
                       <button
                         id={`btn-excel-${quote.quotationId}`}
                         type="button"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs transition-all cursor-pointer shadow-2xs"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs transition-all cursor-pointer shadow-2xs active:scale-95"
                         onClick={(e) => handleOpenExcelPreview(quote, e)}
                         title="View Excel spreadsheet before downloading"
                       >
@@ -515,7 +691,7 @@ export default function OwnerDashboard({
                       <button
                         id={`btn-pdf-${quote.quotationId}`}
                         type="button"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs transition-all cursor-pointer shadow-2xs"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs transition-all cursor-pointer shadow-2xs active:scale-95"
                         onClick={(e) => handleOpenPdfPreview(quote, e)}
                         title="View PDF document before downloading"
                       >
@@ -528,7 +704,7 @@ export default function OwnerDashboard({
                         <button
                           id={`btn-purchased-${quote.quotationId}`}
                           type="button"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 font-bold text-xs transition-all cursor-pointer shadow-2xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 font-bold text-xs transition-all cursor-pointer shadow-2xs active:scale-95"
                           onClick={(e) => handleMarkPurchased(quote, e)}
                           title="Mark as purchased and move to Purchased Quotations"
                         >
@@ -543,7 +719,7 @@ export default function OwnerDashboard({
                           </span>
                           <button
                             type="button"
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white hover:bg-red-50 text-[#8c93a3] hover:text-red-600 border border-[#d8d4c7] hover:border-red-200 text-[11px] font-bold transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white hover:bg-red-50 text-[#8c93a3] hover:text-red-600 border border-[#d8d4c7] hover:border-red-200 text-[11px] font-bold transition-all cursor-pointer active:scale-95"
                             onClick={(e) => handleRevertPurchased(quote, e)}
                             title="Move back to Submitted Quotations"
                           >
@@ -557,7 +733,7 @@ export default function OwnerDashboard({
                       <button
                         id={`btn-view-${quote.quotationId}`}
                         type="button"
-                        className="w-8 h-8 rounded-lg bg-[#f6f5ef] hover:bg-[#eae7de] border border-[#d8d4c7] text-[#575e6d] hover:text-[#1a1c22] flex items-center justify-center transition-all cursor-pointer"
+                        className="w-8 h-8 rounded-lg bg-[#f6f5ef] hover:bg-[#eae7de] border border-[#d8d4c7] text-[#575e6d] hover:text-[#1a1c22] flex items-center justify-center transition-all cursor-pointer active:scale-95"
                         onClick={(e) => handleOpenDetails(quote, e)}
                         title="View Quotation Details"
                         aria-label="View Quotation Details"
@@ -577,34 +753,35 @@ export default function OwnerDashboard({
           EXCEL SPREADSHEET PREVIEW MODAL ("VIEW FIRST THEN DOWNLOAD")
           ======================================================== */}
       {selectedExcelQuote && excelPreviewData && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedExcelQuote(null)}>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedExcelQuote(null)}>
           <div 
-            className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl border border-emerald-300 overflow-hidden flex flex-col animate-scale-up my-auto max-h-[90vh]" 
+            className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl border border-emerald-300 overflow-hidden flex flex-col animate-scale-up my-auto max-h-[92vh]" 
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
           >
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-[#eae7de] flex items-center justify-between bg-emerald-50/60">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-300 flex items-center justify-center">
-                  <FileSpreadsheet size={20} />
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#eae7de] flex items-center justify-between bg-emerald-50/60 flex-shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-300 flex items-center justify-center flex-shrink-0">
+                  <FileSpreadsheet className="w-5 h-5" />
                 </div>
-                <div>
-                  <h2 className="text-lg font-extrabold text-[#1a1c22]">Excel Quotation Preview</h2>
-                  <p className="text-xs text-[#575e6d]">Quotation: <b className="text-[#1a1c22]">{selectedExcelQuote.quotationId}</b> • {selectedExcelQuote.customer?.name}</p>
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#1a1c22] truncate">Excel Preview</h2>
+                  <p className="text-[11px] sm:text-xs text-[#575e6d] truncate"><b>{selectedExcelQuote.quotationId}</b> • {selectedExcelQuote.customer?.name}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer active:scale-95"
                   onClick={() => handleDownloadExcel(selectedExcelQuote)}
                   title="Download Excel Spreadsheet (.xlsx)"
                 >
                   <Download size={14} />
-                  <span>Download Excel (.xlsx)</span>
+                  <span className="hidden sm:inline">Download Excel (.xlsx)</span>
+                  <span className="sm:hidden">Download</span>
                 </button>
                 <button 
                   type="button" 
@@ -618,16 +795,16 @@ export default function OwnerDashboard({
             </div>
 
             {/* Ribbon */}
-            <div className="px-6 py-2 bg-[#f8fafc] border-b border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b]">
+            <div className="px-4 sm:px-6 py-2 bg-[#f8fafc] border-b border-[#e2e8f0] flex items-center justify-between text-[11px] sm:text-xs text-[#64748b] flex-shrink-0">
               <span className="font-bold text-emerald-800 flex items-center gap-1">
                 <FileSpreadsheet size={13} /> Sheet: Quotation
               </span>
-              <span>{excelPreviewData.rows.length} Rows • Formatted Microsoft Excel (.xlsx)</span>
+              <span>{excelPreviewData.rows.length} Rows • Microsoft Excel (.xlsx)</span>
             </div>
 
-            {/* Modal Body: Excel Grid Preview */}
-            <div className="overflow-auto p-4 flex-1 max-h-[58vh]">
-              <table className="w-full text-xs font-mono border-collapse border border-[#cbd5e1]">
+            {/* Modal Body: Excel Grid Preview with touch scrolling */}
+            <div className="overflow-x-auto overflow-y-auto p-3 sm:p-4 flex-1 max-h-[58vh]">
+              <table className="w-full text-xs font-mono border-collapse border border-[#cbd5e1] min-w-[500px]">
                 <tbody>
                   {excelPreviewData.rows.map((row, rIdx) => {
                     const isTitle = rIdx === 0;
@@ -639,7 +816,7 @@ export default function OwnerDashboard({
                         key={rIdx} 
                         className={`${isTitle ? 'bg-amber-50 font-bold' : ''} ${isTableHeader ? 'bg-slate-100 font-extrabold' : ''} ${isSummary ? 'bg-slate-50 font-bold' : ''}`}
                       >
-                        <td className="w-10 text-center bg-slate-100 border border-[#cbd5e1] text-[#94a3b8] py-1 text-[11px] select-none">
+                        <td className="w-8 sm:w-10 text-center bg-slate-100 border border-[#cbd5e1] text-[#94a3b8] py-1 text-[10px] sm:text-[11px] select-none">
                           {rIdx + 1}
                         </td>
                         {[0, 1, 2, 3, 4, 5].map((cIdx) => {
@@ -648,7 +825,7 @@ export default function OwnerDashboard({
                           return (
                             <td 
                               key={cIdx} 
-                              className={`border border-[#cbd5e1] px-2.5 py-1 truncate max-w-xs ${isNumber ? 'text-right text-[#0f172a]' : 'text-[#334155]'}`}
+                              className={`border border-[#cbd5e1] px-2 sm:px-2.5 py-1 truncate max-w-xs ${isNumber ? 'text-right text-[#0f172a]' : 'text-[#334155]'}`}
                             >
                               {isNumber ? (
                                 (val >= 100 || cIdx === 3 || cIdx === 5) 
@@ -666,20 +843,20 @@ export default function OwnerDashboard({
             </div>
 
             {/* Modal Footer */}
-            <div className="px-6 py-3.5 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-between text-xs">
+            <div className="px-4 sm:px-6 py-3 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-between text-xs flex-shrink-0">
               <span className="text-[#575e6d] hidden sm:inline">Previewing spreadsheet layout before downloading.</span>
-              <div className="flex items-center gap-2.5 ml-auto">
+              <div className="flex items-center gap-2 ml-auto w-full sm:w-auto justify-end">
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer active:scale-95"
                   onClick={() => handleDownloadExcel(selectedExcelQuote)}
                 >
                   <Download size={14} />
                   <span>Download Excel</span>
                 </button>
-                <button
-                  type="button"
-                  className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] font-bold text-xs text-[#1a1c22] cursor-pointer"
+                <button 
+                  type="button" 
+                  className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] font-bold text-xs text-[#1a1c22] cursor-pointer" 
                   onClick={() => setSelectedExcelQuote(null)}
                 >
                   Close
@@ -694,7 +871,7 @@ export default function OwnerDashboard({
           PDF DOCUMENT PREVIEW MODAL ("VIEW FIRST THEN DOWNLOAD")
           ======================================================== */}
       {selectedPdfQuote && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedPdfQuote(null)}>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedPdfQuote(null)}>
           <div 
             className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl border border-rose-300 overflow-hidden flex flex-col animate-scale-up my-auto max-h-[92vh]" 
             onClick={(e) => e.stopPropagation()}
@@ -702,26 +879,27 @@ export default function OwnerDashboard({
             aria-modal="true"
           >
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-[#eae7de] flex items-center justify-between bg-rose-50/60">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center">
-                  <FileText size={20} />
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#eae7de] flex items-center justify-between bg-rose-50/60 flex-shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-5 h-5" />
                 </div>
-                <div>
-                  <h2 className="text-lg font-extrabold text-[#1a1c22]">PDF Quotation Preview</h2>
-                  <p className="text-xs text-[#575e6d]">Document: <b className="text-[#1a1c22]">{selectedPdfQuote.quotationId}.pdf</b> • {selectedPdfQuote.customer?.name}</p>
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#1a1c22] truncate">PDF Preview</h2>
+                  <p className="text-[11px] sm:text-xs text-[#575e6d] truncate"><b>{selectedPdfQuote.quotationId}.pdf</b> • {selectedPdfQuote.customer?.name}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer active:scale-95"
                   onClick={() => handleDownloadPdf(selectedPdfQuote)}
                   title="Download PDF Document (.pdf)"
                 >
                   <Download size={14} />
-                  <span>Download PDF (.pdf)</span>
+                  <span className="hidden sm:inline">Download PDF (.pdf)</span>
+                  <span className="sm:hidden">Download</span>
                 </button>
                 <button 
                   type="button" 
@@ -735,17 +913,17 @@ export default function OwnerDashboard({
             </div>
 
             {/* Modal Body: Embedded PDF View */}
-            <div className="p-4 bg-slate-700 flex-1 overflow-auto max-h-[64vh] flex justify-center">
+            <div className="p-3 sm:p-4 bg-slate-700 flex-1 overflow-auto max-h-[64vh] flex justify-center">
               {pdfBlobUrl ? (
                 <iframe 
                   src={`${pdfBlobUrl}#toolbar=0&navpanes=0`} 
                   title={`PDF Document ${selectedPdfQuote.quotationId}`}
-                  className="w-full h-[60vh] rounded-lg bg-white shadow-xl border-none"
+                  className="w-full h-[52vh] sm:h-[60vh] rounded-lg bg-white shadow-xl border-none"
                 />
               ) : (
-                <div className="bg-white p-8 rounded-xl max-w-2xl w-full shadow-xl text-xs space-y-4">
+                <div className="bg-white p-6 sm:p-8 rounded-xl max-w-2xl w-full shadow-xl text-xs space-y-4">
                   <div className="border-b-2 border-[#b38728] pb-3 flex justify-between items-center">
-                    <h3 className="text-base font-extrabold text-[#946c1a]">ROYAL LUXE ELECTRICALS</h3>
+                    <h3 className="text-sm sm:text-base font-extrabold text-[#946c1a]">ROYAL LUXE ELECTRICALS</h3>
                     <span className="font-mono font-bold text-xs bg-[#fbf5e6] px-2 py-0.5 rounded">{selectedPdfQuote.quotationId}</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -765,20 +943,20 @@ export default function OwnerDashboard({
             </div>
 
             {/* Modal Footer */}
-            <div className="px-6 py-3.5 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-between text-xs">
+            <div className="px-4 sm:px-6 py-3 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-between text-xs flex-shrink-0">
               <span className="text-[#575e6d] hidden sm:inline">Viewing official estimate document before downloading.</span>
-              <div className="flex items-center gap-2.5 ml-auto">
+              <div className="flex items-center gap-2 ml-auto w-full sm:w-auto justify-end">
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-full shadow-xs transition-all cursor-pointer active:scale-95"
                   onClick={() => handleDownloadPdf(selectedPdfQuote)}
                 >
                   <Download size={14} />
                   <span>Download PDF</span>
                 </button>
-                <button
-                  type="button"
-                  className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] font-bold text-xs text-[#1a1c22] cursor-pointer"
+                <button 
+                  type="button" 
+                  className="px-4 py-2 rounded-full border border-[#d8d4c7] bg-white hover:bg-[#f6f5ef] font-bold text-xs text-[#1a1c22] cursor-pointer" 
                   onClick={() => setSelectedPdfQuote(null)}
                 >
                   Close
@@ -793,17 +971,17 @@ export default function OwnerDashboard({
           QUOTATION FULL INSPECTION MODAL (CHEVRON VIEW)
           ======================================================== */}
       {selectedPreviewQuote && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedPreviewQuote(null)}>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedPreviewQuote(null)}>
           <div 
             className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#d8d4c7] overflow-hidden flex flex-col animate-scale-up my-auto max-h-[90vh]" 
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
           >
-            <div className="px-6 py-4.5 border-b border-[#eae7de] flex items-center justify-between bg-white">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4.5 border-b border-[#eae7de] flex items-center justify-between bg-white flex-shrink-0">
               <div>
-                <h2 className="text-lg font-extrabold text-[#1a1c22]">Quotation {selectedPreviewQuote.quotationId}</h2>
-                <p className="text-xs text-[#575e6d]">
+                <h2 className="text-base sm:text-lg font-extrabold text-[#1a1c22]">Quotation {selectedPreviewQuote.quotationId}</h2>
+                <p className="text-[11px] sm:text-xs text-[#575e6d]">
                   Issued to <b className="text-[#1a1c22]">{selectedPreviewQuote.customer?.name}</b> • {selectedPreviewQuote.isPurchased ? 'Purchased Order' : 'Active Quotation'}
                 </p>
               </div>
@@ -817,53 +995,55 @@ export default function OwnerDashboard({
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto flex-1 space-y-5">
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4 sm:space-y-5">
               {/* Customer Box */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-[#faf9f6] p-4 rounded-xl border border-[#eae7de] text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 bg-[#faf9f6] p-3 sm:p-4 rounded-xl border border-[#eae7de] text-xs">
                 <div>
-                  <span className="text-[#8c93a3] block font-medium">Customer Name</span>
-                  <span className="font-bold text-[#1a1c22] text-sm">{selectedPreviewQuote.customer?.name}</span>
+                  <span className="text-[#8c93a3] block font-medium text-[10px] sm:text-xs">Customer Name</span>
+                  <span className="font-bold text-[#1a1c22] text-xs sm:text-sm">{selectedPreviewQuote.customer?.name}</span>
                 </div>
                 <div>
-                  <span className="text-[#8c93a3] block font-medium">Mobile Number</span>
-                  <span className="font-bold text-[#1a1c22] text-sm">{selectedPreviewQuote.customer?.mobile}</span>
+                  <span className="text-[#8c93a3] block font-medium text-[10px] sm:text-xs">Mobile Number</span>
+                  <span className="font-bold text-[#1a1c22] text-xs sm:text-sm">{selectedPreviewQuote.customer?.mobile}</span>
                 </div>
                 <div>
-                  <span className="text-[#8c93a3] block font-medium">Email Address</span>
-                  <span className="font-bold text-[#1a1c22] text-sm truncate block">{selectedPreviewQuote.customer?.email}</span>
+                  <span className="text-[#8c93a3] block font-medium text-[10px] sm:text-xs">Email Address</span>
+                  <span className="font-bold text-[#1a1c22] text-xs sm:text-sm truncate block">{selectedPreviewQuote.customer?.email}</span>
                 </div>
               </div>
 
-              {/* Items Table */}
-              <table className="w-full text-xs border-collapse">
-                <thead>
-                  <tr className="border-b border-[#eae7de] text-[#8c93a3] uppercase font-bold text-[10px]">
-                    <th className="text-left py-2">Product Description</th>
-                    <th className="text-left py-2">Category</th>
-                    <th className="text-center py-2">Qty</th>
-                    <th className="text-right py-2">Unit Price</th>
-                    <th className="text-right py-2">Total</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-black/5">
-                  {selectedPreviewQuote.items?.map((item, idx) => (
-                    <tr key={item.id || idx}>
-                      <td className="py-2.5 font-bold text-[#1a1c22]">{item.name}</td>
-                      <td className="py-2.5">
-                        <span className="text-[11px] font-semibold text-[#575e6d] bg-[#f6f5ef] px-2 py-0.5 rounded-full">
-                          {item.category}
-                        </span>
-                      </td>
-                      <td className="py-2.5 text-center text-[#575e6d]">{item.quantity}</td>
-                      <td className="py-2.5 text-right font-mono text-[#575e6d]">{formatCurrency(item.price)}</td>
-                      <td className="py-2.5 text-right font-mono font-bold text-[#1a1c22]">{formatCurrency(item.price * item.quantity)}</td>
+              {/* Items Table with horizontal scroll on small devices */}
+              <div className="overflow-x-auto -mx-1 px-1">
+                <table className="w-full text-xs border-collapse min-w-[340px]">
+                  <thead>
+                    <tr className="border-b border-[#eae7de] text-[#8c93a3] uppercase font-bold text-[10px]">
+                      <th className="text-left py-2">Product Description</th>
+                      <th className="text-left py-2">Category</th>
+                      <th className="text-center py-2">Qty</th>
+                      <th className="text-right py-2">Unit Price</th>
+                      <th className="text-right py-2">Total</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-black/5">
+                    {selectedPreviewQuote.items?.map((item, idx) => (
+                      <tr key={item.id || idx}>
+                        <td className="py-2.5 font-bold text-[#1a1c22]">{item.name}</td>
+                        <td className="py-2.5">
+                          <span className="text-[10px] sm:text-[11px] font-semibold text-[#575e6d] bg-[#f6f5ef] px-2 py-0.5 rounded-full">
+                            {item.category}
+                          </span>
+                        </td>
+                        <td className="py-2.5 text-center text-[#575e6d]">{item.quantity}</td>
+                        <td className="py-2.5 text-right font-mono text-[#575e6d]">{formatCurrency(item.price)}</td>
+                        <td className="py-2.5 text-right font-mono font-bold text-[#1a1c22]">{formatCurrency(item.price * item.quantity)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               {/* Summary */}
-              <div className="bg-[#faf8f3] rounded-xl border border-[#eeddb0] p-4 space-y-2 text-xs text-[#575e6d]">
+              <div className="bg-[#faf8f3] rounded-xl border border-[#eeddb0] p-3.5 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#575e6d]">
                 <div className="flex justify-between">
                   <span>Subtotal ({selectedPreviewQuote.totals?.itemCount} items)</span>
                   <span className="font-mono font-bold text-[#1a1c22]">{formatCurrency(selectedPreviewQuote.totals?.subtotal)}</span>
@@ -872,41 +1052,41 @@ export default function OwnerDashboard({
                   <span>GST (18%)</span>
                   <span className="font-mono font-bold text-[#1a1c22]">{formatCurrency(selectedPreviewQuote.totals?.gstAmount)}</span>
                 </div>
-                <div className="flex justify-between text-sm font-extrabold text-[#1a1c22] pt-2 border-t border-[#d8d4c7]">
+                <div className="flex justify-between text-xs sm:text-sm font-extrabold text-[#1a1c22] pt-2 border-t border-[#d8d4c7]">
                   <span>Total Quotation Amount</span>
-                  <span className="font-mono text-base text-[#946c1a]">{formatCurrency(selectedPreviewQuote.totals?.total)}</span>
+                  <span className="font-mono text-sm sm:text-base text-[#946c1a]">{formatCurrency(selectedPreviewQuote.totals?.total)}</span>
                 </div>
               </div>
             </div>
 
-            <div className="px-6 py-4 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-end gap-2.5">
+            <div className="px-4 sm:px-6 py-3.5 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-end gap-2 flex-wrap sm:flex-nowrap flex-shrink-0">
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs transition-all cursor-pointer"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs transition-all cursor-pointer active:scale-95"
                 onClick={(e) => {
                   setSelectedPreviewQuote(null);
                   handleOpenExcelPreview(selectedPreviewQuote, e);
                 }}
               >
                 <FileSpreadsheet size={15} />
-                <span>View as Excel</span>
+                <span>View Excel</span>
               </button>
 
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs transition-all cursor-pointer"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs transition-all cursor-pointer active:scale-95"
                 onClick={(e) => {
                   setSelectedPreviewQuote(null);
                   handleOpenPdfPreview(selectedPreviewQuote, e);
                 }}
               >
                 <FileText size={15} />
-                <span>View as PDF</span>
+                <span>View PDF</span>
               </button>
 
               <button
                 type="button"
-                className="px-4 py-2 rounded-xl bg-gold-btn text-white font-bold text-xs shadow-xs cursor-pointer"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-gold-btn text-white font-bold text-xs shadow-xs cursor-pointer active:scale-95 text-center"
                 onClick={() => setSelectedPreviewQuote(null)}
               >
                 Close Preview

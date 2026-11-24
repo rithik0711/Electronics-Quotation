@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {
-  X,
-  Upload,
-  Image as ImageIcon,
-  Plus,
-  Tag,
-  Sparkles
+import { 
+  X, 
+  Upload, 
+  Image as ImageIcon, 
+  Plus, 
+  Tag, 
+  Sparkles 
 } from 'lucide-react';
 import { formatCurrency } from '../../utils/formatters';
 
@@ -18,9 +18,9 @@ const SAMPLE_FALLBACK_IMAGES = [
   'https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=800&q=80'
 ];
 
-export default function AddProductModal({
-  isOpen,
-  onClose,
+export default function AddProductModal({ 
+  isOpen, 
+  onClose, 
   onAddProduct,
   existingCategories = []
 }) {
@@ -29,12 +29,12 @@ export default function AddProductModal({
   const [category, setCategory] = useState('Switches');
   const [customCategory, setCustomCategory] = useState('');
   const [isCustomCategory, setIsCustomCategory] = useState(false);
-
+  
   const [photoMode, setPhotoMode] = useState('upload'); // 'upload' | 'url'
   const [photoData, setPhotoData] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [fileName, setFileName] = useState('');
-
+  
   const [errors, setErrors] = useState({});
 
   if (!isOpen) return null;
@@ -123,27 +123,27 @@ export default function AddProductModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in" onClick={onClose}>
-      <div
-        className="relative bg-white rounded-2xl w-full max-w-3xl shadow-2xl border border-[#eeddb0] overflow-hidden flex flex-col animate-scale-up my-auto"
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in" onClick={onClose}>
+      <div 
+        className="relative bg-white rounded-2xl w-full max-w-3xl shadow-2xl border border-[#eeddb0] overflow-hidden flex flex-col animate-scale-up my-auto max-h-[92vh]" 
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
         {/* Dialog Header */}
-        <div className="px-6 py-4 border-b border-[#eae7de] flex items-center justify-between bg-gradient-to-r from-white to-[#faf9f5]">
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#fbf5e6] text-[#b38728] border border-[#eeddb0] flex items-center justify-center">
-              <Plus size={22} />
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#eae7de] flex items-center justify-between bg-gradient-to-r from-white to-[#faf9f5] flex-shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3.5">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#fbf5e6] text-[#b38728] border border-[#eeddb0] flex items-center justify-center flex-shrink-0">
+              <Plus size={20} />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-[#1a1c22]">Add New Product</h2>
-              <p className="text-xs text-[#575e6d]">Add photo, name, price, and category to list in store</p>
+              <h2 className="text-base sm:text-lg font-extrabold text-[#1a1c22]">Add New Product</h2>
+              <p className="text-[11px] sm:text-xs text-[#575e6d]">Add photo, name, price, and category to list in store</p>
             </div>
           </div>
-          <button
-            type="button"
-            className="w-8 h-8 rounded-lg border border-[#eae7de] hover:bg-[#f6f5ef] text-[#575e6d] hover:text-[#1a1c22] flex items-center justify-center cursor-pointer transition-colors"
+          <button 
+            type="button" 
+            className="w-8 h-8 rounded-lg border border-[#eae7de] hover:bg-[#f6f5ef] text-[#575e6d] hover:text-[#1a1c22] flex items-center justify-center cursor-pointer transition-colors" 
             onClick={onClose}
             aria-label="Close dialog"
           >
@@ -152,8 +152,8 @@ export default function AddProductModal({
         </div>
 
         {/* Dialog Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col overflow-y-auto max-h-[80vh]">
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col overflow-y-auto flex-1">
+          <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {/* Left side: Photo Upload & Preview */}
             <div className="space-y-3">
               <label className="block text-xs font-bold text-[#1a1c22]">
@@ -164,8 +164,9 @@ export default function AddProductModal({
               <div className="flex gap-1.5 bg-[#f6f5ef] p-1 rounded-xl">
                 <button
                   type="button"
-                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${photoMode === 'upload' ? 'bg-white text-[#1a1c22] shadow-2xs' : 'text-[#575e6d] hover:text-[#1a1c22]'
-                    }`}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    photoMode === 'upload' ? 'bg-white text-[#1a1c22] shadow-2xs' : 'text-[#575e6d] hover:text-[#1a1c22]'
+                  }`}
                   onClick={() => setPhotoMode('upload')}
                 >
                   <Upload size={13} />
@@ -173,8 +174,9 @@ export default function AddProductModal({
                 </button>
                 <button
                   type="button"
-                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${photoMode === 'url' ? 'bg-white text-[#1a1c22] shadow-2xs' : 'text-[#575e6d] hover:text-[#1a1c22]'
-                    }`}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    photoMode === 'url' ? 'bg-white text-[#1a1c22] shadow-2xs' : 'text-[#575e6d] hover:text-[#1a1c22]'
+                  }`}
                   onClick={() => setPhotoMode('url')}
                 >
                   <ImageIcon size={13} />
@@ -193,14 +195,14 @@ export default function AddProductModal({
                   />
                   <label htmlFor="product-photo-file-input" className="block cursor-pointer p-4 text-center">
                     {photoData ? (
-                      <div className="relative w-full h-40 rounded-lg overflow-hidden">
+                      <div className="relative w-full h-36 sm:h-40 rounded-lg overflow-hidden">
                         <img src={photoData} alt="Preview" className="w-full h-full object-cover" />
                         <span className="absolute bottom-2 right-2 bg-black/75 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-xs">
                           Click to Change
                         </span>
                       </div>
                     ) : (
-                      <div className="py-6 flex flex-col items-center gap-2">
+                      <div className="py-5 sm:py-6 flex flex-col items-center gap-2">
                         <Upload size={28} className="text-[#b38728]" />
                         <span className="text-xs font-bold text-[#1a1c22]">Click to upload photo</span>
                         <span className="text-[11px] text-[#8c93a3]">Supports PNG, JPG, WebP</span>
@@ -219,13 +221,13 @@ export default function AddProductModal({
                       setPhotoUrl(e.target.value);
                       setErrors(prev => ({ ...prev, photo: null }));
                     }}
-                    className="w-full px-3.5 py-2 text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] rounded-xl outline-none"
+                    className="w-full px-3.5 py-2 text-base sm:text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] rounded-xl outline-none"
                   />
                   {photoUrl && (
-                    <div className="w-full h-36 rounded-xl overflow-hidden border border-[#eae7de]">
-                      <img
-                        src={photoUrl}
-                        alt="URL Preview"
+                    <div className="w-full h-32 sm:h-36 rounded-xl overflow-hidden border border-[#eae7de]">
+                      <img 
+                        src={photoUrl} 
+                        alt="URL Preview" 
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.target.onerror = null;
@@ -245,8 +247,9 @@ export default function AddProductModal({
                     <button
                       key={idx}
                       type="button"
-                      className={`w-11 h-11 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${activeImage === img ? 'border-[#b38728] ring-2 ring-[#c59b27]/30 scale-105' : 'border-transparent hover:scale-105'
-                        }`}
+                      className={`w-11 h-11 rounded-lg overflow-hidden border-2 transition-all cursor-pointer active:scale-95 ${
+                        activeImage === img ? 'border-[#b38728] ring-2 ring-[#c59b27]/30 scale-105' : 'border-transparent hover:scale-105'
+                      }`}
                       onClick={() => handlePickSampleImage(img)}
                       title={`Sample photo ${idx + 1}`}
                     >
@@ -260,23 +263,24 @@ export default function AddProductModal({
             </div>
 
             {/* Right side: Name, Price, Category */}
-            <div className="space-y-4">
+            <div className="space-y-3.5 sm:space-y-4">
               {/* Product Name */}
               <div>
-                <label htmlFor="product-name-input" className="block text-xs font-bold text-[#1a1c22] mb-1.5">
+                <label htmlFor="product-name-input" className="block text-xs font-bold text-[#1a1c22] mb-1">
                   Product Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="product-name-input"
                   type="text"
-                  placeholder="e.g. Royal 24K Gold Touch Sensor Switch"
+                  placeholder="e.g. Royal 24K Gold Touch Switch"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                     if (errors.name) setErrors(prev => ({ ...prev, name: null }));
                   }}
-                  className={`w-full px-3.5 py-2 text-sm bg-white border rounded-xl outline-none transition-all ${errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-100' : 'border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20'
-                    }`}
+                  className={`w-full px-3.5 py-2 text-base sm:text-sm bg-white border rounded-xl outline-none transition-all ${
+                    errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-100' : 'border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20'
+                  }`}
                   autoFocus
                 />
                 {errors.name && <span className="text-xs text-red-600 font-semibold mt-1 block">{errors.name}</span>}
@@ -284,7 +288,7 @@ export default function AddProductModal({
 
               {/* Product Price */}
               <div>
-                <label htmlFor="product-price-input" className="block text-xs font-bold text-[#1a1c22] mb-1.5">
+                <label htmlFor="product-price-input" className="block text-xs font-bold text-[#1a1c22] mb-1">
                   Price (INR) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative flex items-center">
@@ -300,8 +304,9 @@ export default function AddProductModal({
                       setPrice(e.target.value);
                       if (errors.price) setErrors(prev => ({ ...prev, price: null }));
                     }}
-                    className={`w-full pl-8 pr-24 py-2 text-sm font-mono font-bold bg-white border rounded-xl outline-none transition-all ${errors.price ? 'border-red-400 focus:ring-2 focus:ring-red-100' : 'border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20'
-                      }`}
+                    className={`w-full pl-8 pr-24 py-2 text-base sm:text-sm font-mono font-bold bg-white border rounded-xl outline-none transition-all ${
+                      errors.price ? 'border-red-400 focus:ring-2 focus:ring-red-100' : 'border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20'
+                    }`}
                   />
                   {price && !isNaN(Number(price)) && Number(price) > 0 && (
                     <span className="absolute right-3 bg-[#fbf5e6] text-[#946c1a] font-mono text-xs font-extrabold px-2 py-0.5 rounded-md pointer-events-none">
@@ -314,14 +319,14 @@ export default function AddProductModal({
 
               {/* Product Category */}
               <div>
-                <label htmlFor="product-category-select" className="block text-xs font-bold text-[#1a1c22] mb-1.5">
+                <label htmlFor="product-category-select" className="block text-xs font-bold text-[#1a1c22] mb-1">
                   Category <span className="text-red-500">*</span>
                 </label>
                 <select
                   id="product-category-select"
                   value={isCustomCategory ? '__custom__' : category}
                   onChange={handleCategoryChange}
-                  className="w-full px-3.5 py-2 text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none"
+                  className="w-full px-3.5 py-2 text-base sm:text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] focus:ring-2 focus:ring-[#c59b27]/20 rounded-xl outline-none"
                 >
                   {allCategoryOptions.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -338,7 +343,7 @@ export default function AddProductModal({
                       setCustomCategory(e.target.value);
                       if (errors.category) setErrors(prev => ({ ...prev, category: null }));
                     }}
-                    className="w-full px-3.5 py-2 text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] rounded-xl outline-none mt-2"
+                    className="w-full px-3.5 py-2 text-base sm:text-sm bg-white border border-[#d8d4c7] focus:border-[#b38728] rounded-xl outline-none mt-2"
                     autoFocus
                   />
                 )}
@@ -347,20 +352,20 @@ export default function AddProductModal({
 
               {/* Live Preview Pill */}
               <div className="bg-gradient-to-br from-white to-[#faf8f3] border border-[#eeddb0] rounded-xl p-3 shadow-2xs">
-                <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#946c1a] uppercase tracking-wider mb-1.5">
+                <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#946c1a] uppercase tracking-wider mb-1">
                   <Sparkles size={12} />
                   <span>Catalog Card Preview</span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <h4 className="text-sm font-bold text-[#1a1c22] truncate">{name.trim() || 'Product Name'}</h4>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#575e6d] bg-white border border-[#eae7de] px-2 py-0.5 rounded-full mt-1">
+                    <h4 className="text-xs sm:text-sm font-bold text-[#1a1c22] truncate">{name.trim() || 'Product Name'}</h4>
+                    <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-[#575e6d] bg-white border border-[#eae7de] px-2 py-0.5 rounded-full mt-0.5">
                       <Tag size={10} className="text-[#b38728]" />
                       <span>{isCustomCategory ? (customCategory.trim() || 'Custom') : category}</span>
                     </span>
                   </div>
-                  <div className="font-mono text-base font-extrabold text-[#946c1a] flex-shrink-0">
-                    {price && !isNaN(Number(price)) && Number(price) > 0
+                  <div className="font-mono text-sm sm:text-base font-extrabold text-[#946c1a] flex-shrink-0">
+                    {price && !isNaN(Number(price)) && Number(price) > 0 
                       ? formatCurrency(Number(price))
                       : '₹0'}
                   </div>
@@ -370,10 +375,10 @@ export default function AddProductModal({
           </div>
 
           {/* Dialog Action Buttons */}
-          <div className="px-6 py-4 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-end gap-3">
+          <div className="px-4 sm:px-6 py-3.5 bg-[#f8fafc] border-t border-[#eae7de] flex items-center justify-end gap-2.5 sm:gap-3 flex-shrink-0">
             <button
               type="button"
-              className="px-4 py-2 bg-white border border-[#d8d4c7] hover:bg-[#f6f5ef] text-[#575e6d] text-sm font-bold rounded-xl transition-all cursor-pointer"
+              className="flex-1 sm:flex-none px-4 py-2 bg-white border border-[#d8d4c7] hover:bg-[#f6f5ef] text-[#575e6d] text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer active:scale-95 text-center"
               onClick={onClose}
             >
               Cancel
@@ -381,7 +386,7 @@ export default function AddProductModal({
             <button
               type="submit"
               id="confirm-add-product-btn"
-              className="px-5 py-2 bg-gold-btn text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow-[0_4px_14px_rgba(197,155,39,0.25)] transition-all cursor-pointer hover:shadow-[0_6px_18px_rgba(197,155,39,0.35)]"
+              className="flex-1 sm:flex-none px-5 py-2 bg-gold-btn text-white font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(197,155,39,0.25)] transition-all cursor-pointer hover:shadow-[0_6px_18px_rgba(197,155,39,0.35)] active:scale-95"
             >
               <Plus size={16} />
               <span>Add Product</span>
